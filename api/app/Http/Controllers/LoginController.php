@@ -14,6 +14,9 @@ class LoginController extends Controller
      * The laravel_session cookie token is returned in the headers and is automatically
      * absorbed into an HTTP-compliant Ajax interface; no token handling necessary here.
      */
+    /**
+     * When testing ensure application/json header is set in Postman.
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([

@@ -3,8 +3,11 @@
 use App\Http\Controllers\CameraController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MobileLoginController;
 use App\Http\Controllers\RollController;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +21,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/heartbeat', function (Request $request) {
+    return new \Illuminate\Http\JsonResponse(['success', 'timestamp' => now()]);
+});
+
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::post('/login-mobile',  [MobileLoginController::class, 'login']);
+Route::post('/logout-mobile', [MobileLoginController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
