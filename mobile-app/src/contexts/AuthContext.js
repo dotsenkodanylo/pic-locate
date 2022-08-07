@@ -1,6 +1,7 @@
 import createDataContext from './createDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../api/api';
+import * as Device from 'expo-device';
 
 const authReducer = (state, action) => {
    switch (action.type) {
@@ -15,7 +16,6 @@ const authReducer = (state, action) => {
             ...state,
             token: null
          };
-
 
       case 'LOGIN':
          return {
@@ -51,8 +51,6 @@ const authReducer = (state, action) => {
             isLoading: false
          }
 
-      case 'UNSET_LOADING':
-
       default:
          return state;
    }
@@ -61,17 +59,16 @@ const authReducer = (state, action) => {
 const login = (dispatch) => {
    return async ({ email, password }) => {
       try {
-         const deviceName = await DeviceInfo.getDeviceName();
-         const response = await api.post('/login', {
+         const response = await api.post('/login-mobile', {
             email,
             password,
-            deviceName
-         });
+            deviceName: Device.deviceName
+         })
 
          await AsyncStorage.setItem('token', response.data.token);
          dispatch({ type: 'LOGIN', payload: response.data.token });
-
       } catch (e) {
+         console.log(e)
          dispatch({ type: 'SET_ERROR_MESSAGE', payload: 'Something went wrong with logging in.' });
       }
    };
@@ -84,7 +81,6 @@ const logout = (dispatch) => {
 
          await AsyncStorage.removeItem('token');
          dispatch({ type: 'LOGOUT' });
-
       } catch (e) {
          dispatch({ type: 'SET_ERROR_MESSAGE', payload: 'Something went wrong with logging out.' });
       }
@@ -104,12 +100,14 @@ const resolveAuthToken = (dispatch) => {
 
 const loadToken = (dispatch) => {
    return async () => {
+      await AsyncStorage.setItem('token', "ASDF_TEST");
       dispatch({ type: 'TEST_LOAD_TOKEN' });
    };
 }
 
 const offloadToken = (dispatch) => {
    return async () => {
+      await AsyncStorage.removeItem('token');
       dispatch({ type: 'TEST_OFFLOAD_TOKEN' });
    };
 }

@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView, TextInput, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Context as AuthContext } from '../contexts/AuthContext';
-import { Button } from 'react-native-elements';
 
 const LoginScreen = ({ navigation }) => {
-   const { errorMessage } = useContext(AuthContext);
+   const { errorMessage, login } = useContext(AuthContext);
+   const [email, setEmail] = useState('dotsenkodanylo@gmail.com');
+   const [password, setPassword] = useState('asdfASDF123!');
 
    return (
       <SafeAreaView style={{
@@ -17,31 +18,37 @@ const LoginScreen = ({ navigation }) => {
             <TextInput
                placeholder="Email"
                placeholderTextColor="#216EABFF"
+               value={email}
                autoCapitalize="none"
                style={styles.textInput}
-               onChangeText={(text) => {
+               onChangeText={(email) => {
+                  setEmail(email);
                }}
                autoCorrect={false}
             />
             <TextInput
                placeholder="Password"
                placeholderTextColor="#216EABFF"
+               value={password}
                autoCapitalize="none"
                style={styles.textInput}
-               onChangeText={(text) => {
+               onChangeText={(password) => {
+                  setPassword(password);
                }}
                secureTextEntry
             />
             <TouchableOpacity
                style={styles.loginButton}
-               onPress={() => {
-               }}
-               title='Login'
-            >
+               onPress={() => login({email, password})}
+               title='Login'>
                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-               <Text style={{ color: '#216EABFF', fontWeight: 'bold', fontSize: 13 }}>Don't have an account? Sign-up</Text>
+            <TouchableOpacity onPress={() => {
+               navigation.navigate('Signup')
+            }}>
+               <Text style={{ color: '#216EABFF', fontWeight: 'bold', fontSize: 13 }}>
+                  Don't have an account? Sign-up
+               </Text>
             </TouchableOpacity>
          </View>
          <View style={{ flex: 1 }}/>

@@ -3,7 +3,7 @@ import { SafeAreaView, Text } from 'react-native';
 import {Context as AuthContext} from '../contexts/AuthContext';
 import { Button } from 'react-native-elements';
 
-const HomeScreen = () => {
+const DashboardScreen = () => {
    const {offloadToken} = useContext(AuthContext);
    return (
       <SafeAreaView>
@@ -13,4 +13,4 @@ const HomeScreen = () => {
    );
 }
 
-export default HomeScreen;
+export default DashboardScreen;

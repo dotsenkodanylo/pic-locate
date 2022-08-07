@@ -1,11 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthSplashScreen from './src/screens/AuthSplashScreen';
-import HomeScreen from './src/screens/HomeScreen';
 import { Context as AuthContext, Provider as AuthProvider } from './src/contexts/AuthContext';
 import React, { useContext, useEffect } from 'react';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
+import DashboardScreen from './src/screens/DashboardScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +21,7 @@ const AuthNavStack = () => {
 const HomeNavStack = () => {
    return (
       <Stack.Navigator>
-         <Stack.Screen name="Home" component={HomeScreen}/>
+         <Stack.Screen name="Dashboard" component={DashboardScreen}/>
       </Stack.Navigator>
    );
 };
@@ -39,7 +39,7 @@ const App = () => {
 
    return (
       <NavigationContainer>
-         {state.token === null ? <AuthNavStack/> : <HomeScreen/>}
+         {state.token === null ? <AuthNavStack/> : <HomeNavStack/>}
       </NavigationContainer>
    );
 };
